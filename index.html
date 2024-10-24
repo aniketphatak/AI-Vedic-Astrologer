@@ -8,17 +8,15 @@
 </head>
 <body>
     <h1>AI Vedic Astrologer</h1>
-    <form id="birth-form">
-        <label for="birthDate">Birth Date:</label>
-        <input type="date" id="birthDate" name="birthDate" required>
-        <label for="birthTime">Birth Time:</label>
-        <input type="time" id="birthTime" name="birthTime" required>
-        <label for="birthLocation">Birth Location:</label>
-        <input type="text" id="birthLocation" name="birthLocation" placeholder="City, Country" required>
-        <button type="submit">Get Birth Chart</button>
-    </form>
 
-    <div id="response"></div>
+    <div id="chatbox">
+        <div id="conversation"></div>
+    </div>
+
+    <form id="chat-form">
+        <input type="text" id="user-input" placeholder="Ask your question here..." required>
+        <button type="submit">Send</button>
+    </form>
 
     <script src="script.js"></script>
 </body>
