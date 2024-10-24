@@ -13,7 +13,7 @@ document.getElementById('chat-form').addEventListener('submit', async function (
 
     // Prepare the payload for GPT API request
     const payload = {
-        model: 'gpt-4o', // Or your Custom GPT model name
+        model: 'gpt-3.5-turbo', // Or your Custom GPT model name
         messages: [{ role: 'user', content: userInput }],
         max_tokens: 150
     };
