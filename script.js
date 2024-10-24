@@ -1,34 +1,51 @@
-document.getElementById('birth-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
+// Replace with your OpenAI API key
+const apiKey = 'sk-HxDNF-0HzM-KAGdRjm7p_zU_6lrzNAgAHBfmnZty_NT3BlbkFJDybMdtDZsbKb5E78Fm-8azzNuTWMvtZ9KsELBdn70A'; // Add your OpenAI API Key here
 
-    const birthDate = document.getElementById('birthDate').value;
-    const birthTime = document.getElementById('birthTime').value;
-    const birthLocation = document.getElementById('birthLocation').value;
+// Event listener for form submission
+document.getElementById('chat-form').addEventListener('submit', async function (e) {
+    e.preventDefault(); // Prevent form from submitting the traditional way
 
-    const responseDiv = document.getElementById('response');
-    responseDiv.innerHTML = 'Fetching birth chart...';
+    const userInput = document.getElementById('user-input').value;
+    addMessageToChatbox('You', userInput);
 
-    // Prepare the payload for your GPT model request
-    const data = {
-        birthDate: birthDate,
-        birthTime: birthTime,
-        birthLocation: birthLocation
+    // Clear the input field
+    document.getElementById('user-input').value = '';
+
+    // Prepare the payload for GPT API request
+    const payload = {
+        model: 'gpt-4o', // Or your Custom GPT model name
+        messages: [{ role: 'user', content: userInput }],
+        max_tokens: 150
     };
 
     try {
-        // Call the backend API to get the birth chart analysis (replace with your API endpoint)
-        const response = await fetch('https://your-backend-url.com/analyze', {
+        // Make request to OpenAI API
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}` // Authenticate with API Key
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(payload)
         });
 
-        const result = await response.json();
-        responseDiv.innerHTML = `<p>${result.analysis}</p>`;
+        const data = await response.json();
+        const gptMessage = data.choices[0].message.content.trim();
+        addMessageToChatbox('Vedic Astrologer', gptMessage);
     } catch (error) {
-        responseDiv.innerHTML = 'Error fetching birth chart. Please try again later.';
-        console.error('Error:', error);
+        console.error('Error fetching GPT response:', error);
+        addMessageToChatbox('Vedic Astrologer', 'Sorry, there was an error. Please try again.');
     }
 });
+
+// Function to add messages to the chatbox
+function addMessageToChatbox(sender, message) {
+    const conversationDiv = document.getElementById('conversation');
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message');
+    messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+    conversationDiv.appendChild(messageDiv);
+
+    // Scroll to the bottom of the chatbox
+    conversationDiv.scrollTop = conversationDiv.scrollHeight;
+}
