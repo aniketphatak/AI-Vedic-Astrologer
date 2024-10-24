@@ -1,5 +1,5 @@
 // Replace with your OpenAI API key
-const apiKey = 'sk-HxDNF-0HzM-KAGdRjm7p_zU_6lrzNAgAHBfmnZty_NT3BlbkFJDybMdtDZsbKb5E78Fm-8azzNuTWMvtZ9KsELBdn70A'; // Add your OpenAI API Key here
+const apiKey = ''; // Add your OpenAI API Key here
 
 // Event listener for form submission
 document.getElementById('chat-form').addEventListener('submit', async function (e) {
